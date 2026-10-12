@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KuisKu - Masuk dengan kode kuis</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar"><div class="wrap">
+    <a class="brand" href="index.html"><span class="logo">K</span><span id="appname">KuisKu</span></a>
+    <a class="btn btn-sm btn-ghost" href="admin.html">Guru / Admin</a>
+  </div></header>
+  <main class="wrap narrow">
+    <section class="hero">
+      <h1>Siap mengerjakan Soal</h1>
+      <p>Masukkan kode Soal dari gurumu untuk mulai.</p>
+      <form class="card stack" id="f" autocomplete="off">
+        <label class="field"><span class="sr" style="position:absolute;left:-9999px">Kode kuis</span>
+          <input type="text" id="code" class="codeinput" maxlength="10" placeholder="KODE" inputmode="text" autocapitalize="characters" spellcheck="false" required autofocus></label>
+        <button class="btn btn-primary btn-block btn-lg">Mulai</button>
+      </form>
+    </section>
+  </main>
+  <script src="js/config.js"></script>
+  <script>
+    (function () {
+      var name = (window.KUIS_CONFIG || {}).APP_NAME || "KuisKu";
+      document.getElementById("appname").textContent = name;
+      document.title = name + " - Masuk dengan kode kuis";
+      var input = document.getElementById("code");
+      var pre = new URLSearchParams(location.search).get("kode");
+      if (pre) input.value = pre.toUpperCase();
+      document.getElementById("f").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var c = input.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+        if (c) location.href = "quiz.html?kode=" + encodeURIComponent(c);
+      });
+    })();
+  </script>
+</body>
+</html>
